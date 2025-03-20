@@ -21,7 +21,7 @@ void resetCursor(){
     printf("\033[H");
 }
 
-void printBuffer(float **buffer, int windowWidth, int windowHeight) {
+void drawBuffer(float **buffer, int windowWidth, int windowHeight) {
     if(!buffer){
         for(int i = 0; i < windowHeight;i++){
             printf("\n");

@@ -133,10 +133,15 @@ void renderScene(scene scene) {
  */
 
  int main() {
+    vec2 windowSize = {100,50};
     int windowWidth = 100;
     int windowHeight = 50;
+    vec2 infoLinePos = {0, windowHeight - 3};
+
 
     scene scene;
+    drawBuffer(NULL,windowWidth,windowHeight);
+    drawInfoLine(infoLinePos, (vec2){windowSize.x, 3});
 
     return 0;
 }
