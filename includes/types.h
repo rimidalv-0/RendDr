@@ -1,8 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef struct
-{
+typedef struct {
     int a;
     int b;
     int c;
@@ -14,21 +13,18 @@ typedef struct {
     int n_faces;
     face *faces;
 } mesh;
-typedef struct
-{
+typedef struct {
     char name[64];
     vec3 pos;
     vec3 scale;
     vec3 mat;
     mesh mesh;
 } obj;
-typedef struct
-{
+typedef struct {
     vec3 pos;
     float fov;
 } cam;
-typedef struct
-{
+typedef struct {
     char name[64];
     int n_objects;
     obj *objects;

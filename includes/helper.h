@@ -21,9 +21,9 @@ void resetCursor(){
     printf("\033[H");
 }
 
-void drawBuffer(float **buffer, int windowWidth, int windowHeight) {
+void drawBuffer(float **buffer, vec2 windowSize) {
     if(!buffer){
-        for(int i = 0; i < windowHeight;i++){
+        for(int i = 0; i < windowSize.y;i++){
             printf("\n");
         }
     }
