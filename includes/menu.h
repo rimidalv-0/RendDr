@@ -1,33 +1,35 @@
 #ifndef MENU_H
 #define MENU_H
 
-typedef struct menuOption{
+struct page page;
+
+typedef struct page {
     char *title;
-} menuOption;
+    unsigned int n_subpages;
+    struct page **subPages;
+    struct page *parentPage;
+} page;
 
 typedef enum {
     MAINMENU,
     SCENEMENU,
     OBJECTMENU
-}pages;
+} pageID;
 
-menuOption mainMenu = { "MAIN MENU"};
-menuOption sceneMenu = { "SCENE MENU"};
-menuOption objectMenu = { "OBJECT MENU"};
-
-
-
-void drawMenu(menuOption *page){
+void drawMenu(page *page) {
     printf("%s", page->title);
 }
 
-void menu(pages page){
-    menuOption arr[] = {
+void menu(pageID page) {
+    page sceneMenu = {"SCENE MENU"};
+    page objectMenu = {"OBJECT MENU"};
+    page mainMenuSubPages[] = {sceneMenu, objectMenu};
+    page mainMenu = {"MAIN MENU", *mainMenuSubPages};
+    page arr[] = {
         [MAINMENU] = mainMenu,
         [SCENEMENU] = sceneMenu,
-        [OBJECTMENU] = objectMenu
-    };
-    drawMenu(&arr[page]);
+        [OBJECTMENU] = objectMenu};
+    drawMenu(arr[page]);
 }
 
 #endif
