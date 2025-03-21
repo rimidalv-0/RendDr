@@ -11,9 +11,11 @@ typedef enum {
 
 typedef struct page {
     char *title;
-    PAGEID *subPages;
     int n_subPages;
+    PAGEID *subPages;
     PAGEID parentPage;
+    int n_actions;
+    void (*action)();
 } page;
 
 
@@ -27,9 +29,9 @@ void drawMenu(page *pages, PAGEID pageid) {
 }
 
 void menu(PAGEID pageid) {
-    PAGEID mainMenuPages[] = {CAMMENU, SCENEMENU, OBJECTMENU};
     page pages[PAGE_COUNT];
-
+    
+    PAGEID mainMenuPages[] = {CAMMENU, SCENEMENU, OBJECTMENU};
     pages[MAINMENU] = (page){
         .title = "MAIN MENU",
         .subPages = mainMenuPages,
@@ -37,6 +39,7 @@ void menu(PAGEID pageid) {
         .parentPage = MAINMENU
     };
 
+    PAGEID sceneMenuPages[] = {}
     pages[SCENEMENU] = (page){
         .title = "SCENE MENU",
         .subPages = NULL,
