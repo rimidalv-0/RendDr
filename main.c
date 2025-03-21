@@ -102,7 +102,8 @@ void renderScene(scene scene) {
             float fy = (((float)y / windowHeight) - 0.5) * 2;
             float randValue = (float)rand() / RAND_MAX;
 
-            // get the pixel value
+            // get the pixel value    page sceneMenu; = {"SCENE MENU", NULL, NULL};
+
             float pixelValue = drawPixel(fx, fy, scene.camera, scene.objects, n_objects);
 
             // if pixel too dark clamp at 0
