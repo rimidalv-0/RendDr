@@ -141,7 +141,7 @@ void renderScene(scene scene) {
     scene scene;
     drawBuffer(NULL,windowSize);
     drawInfoLine(infoLinePos, (vec2){windowSize.x, 3});
-    menu(MAINMENU);
+    menu(SCENEMENU);
 
 
     return 0;
