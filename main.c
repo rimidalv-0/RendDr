@@ -133,16 +133,18 @@ void renderScene(scene scene) {
 }
  */
 
- int main() {
-    vec2 windowSize = {100,50};
+
+int main() {
+    vec2 windowSize = {100, 50};
     vec2 infoLinePos = {0, windowSize.y - 3};
 
+    page pages[PAGE_COUNT];
 
-    scene scene;
-    drawBuffer(NULL,windowSize);
+    scene sscene;
+    sscene.n_objects = 2;
+    drawBuffer(NULL, windowSize);
     drawInfoLine(infoLinePos, (vec2){windowSize.x, 3});
-    menu(SCENEMENU);
-
+    menu(MAINMENU, &sscene);
 
     return 0;
 }

@@ -1,6 +1,17 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+typedef struct
+{
+    int x;
+    int y;
+} vec2;
+typedef struct
+{
+    float x;
+    float y;
+    float z;
+} vec3;
 typedef struct {
     int a;
     int b;
@@ -25,7 +36,7 @@ typedef struct {
     float fov;
 } cam;
 typedef struct {
-    char name[64];
+    char *name;
     int n_objects;
     obj *objects;
     cam camera;

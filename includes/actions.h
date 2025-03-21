@@ -1,20 +1,15 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-obj *createObject(scene *scene) {
-    scene->n_objects++;
-    scene->objects = realloc(scene->objects, sizeof(obj) * scene->n_objects);
 
-    return &scene->objects[scene->n_objects - 1];
-}
+// ---------------------------- object Actions -------------------------
 
-void changeObjectColor(obj *object, vec3 col){
-    object->mat = col;
-}
 
-void changeObjectColorWrapper(scene *scene){
+
+
+void changeObjectColorWrapper(scene *scene) {
     /* obj *object = selectObject("select object", scene->objects, scene->n_objects);
-    
+
     printf("select color: ");
     float a,b,c;
     scanf("%f %f %f", &a ,&b ,&c);
@@ -39,7 +34,7 @@ void moveObject(obj *object, vec3 pos) {
 
 void moveObjectWrapper(scene *scene) {
     /* obj *object = selectObject("select object", scene->objects, scene->n_objects);
-    
+
     if(!object){
         return;
     }
@@ -176,6 +171,7 @@ void importObject(scene *scene) {
     importFromObj(object, file);
     moveObject(object, (vec3){0, 0, 0});
     scaleObject(object, (vec3){1, 1, 1}); */
+    printf("%d", scene->n_objects);
 }
 
 void printObjectInfo(obj *object) {
@@ -193,6 +189,8 @@ void printObjectInfo(obj *object) {
 
     return;
 }
+
+// ---------------------------- camera Actions -------------------------
 
 void moveCamera(cam *cam, vec3 pos) {
     cam->pos = pos;
@@ -225,6 +223,8 @@ void fovCameraWrapper(cam *cam) {
     fovCamera(cam, a);
     return;
 }
+
+// ---------------------------- scene Actions -------------------------
 
 void renameScene(scene *scene) {
     printf("Enter scene name: ");
