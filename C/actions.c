@@ -3,7 +3,7 @@
 
 
 
-// obj *createObject(scene *scene) {
+// obj *createObject(scene_t *scene) {
 //     scene->n_objects++;
 //     scene->objects = realloc(scene->objects, sizeof(obj) * scene->n_objects);
 
@@ -12,7 +12,7 @@
 // void changeObjectColor(obj *object, vec3 col) {
 //     object->mat = col;
 // }
-// void changeObjectColorWrapper(scene *scene) {
+// void changeObjectColorWrapper(scene_t *scene) {
 //     obj *object = selectObject("select object", scene->objects, scene->n_objects);
 
 //     printf("select color: ");
@@ -122,7 +122,7 @@
 //         object->mesh.faces[i].normal = normVec(crossProduct(subVec(c, a), subVec(b, a)));
 //     }
 // }
-void importObject(scene *scene) {
+void importObject(scene_t *scene) {
     /* system("clear");
     printf("enter directory: ");
 
@@ -214,7 +214,3 @@ void importObject(scene *scene) {
 //     return; 
 // }
 
-action_t a_importObject = {
-    .title = "import object",
-    .fuction = importObject
-};

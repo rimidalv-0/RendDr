@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "H/pages.h"
 #include "H/types.h"
 #include "H/vectors.h"
 #include "H/menu.h"
@@ -44,24 +45,11 @@ void someAction() {
 }
 
 int main() {
-    page_t objectPage = {
-        .title = "object page"};
+    vec2 windowSize = {100, 50};
 
-    entry_t mainEntries[] = {
-        (entry_t){
-            .title = "object menu",
-            .data = &objectPage},
-        (entry_t){
-            .title = "scene menu",
-            .data = &objectPage},
-        (entry_t){
-            .title = "camera menu",
-            .data = &objectPage}};
+    scene_t scene;
 
-    page_t mainPage = {
-        .title = "main page",
-        .entries = mainEntries,
-        .n_entries = sizeof(mainEntries) / sizeof(mainEntries[0])};
+    drawBuffer(scene.buffer, windowSize);
 
     page_t *current_page = &mainPage;
 

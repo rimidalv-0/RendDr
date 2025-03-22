@@ -8,30 +8,30 @@ typedef struct {
     int b;
     int c;
     vec3 normal;
-} face;
+} face_t;
 typedef struct {
     int n_vertices;
     vec3 *verticies;
     int n_faces;
-    face *faces;
-} mesh;
+    face_t *faces;
+} mesh_t;
 typedef struct {
     char name[64];
     vec3 pos;
     vec3 scale;
     vec3 mat;
-    mesh mesh;
-} obj;
+    mesh_t mesh;
+} object_t;
 typedef struct {
     vec3 pos;
     float fov;
-} cam;
+} camera_t;
 typedef struct {
     char *name;
     int n_objects;
-    obj *objects;
-    cam camera;
+    object_t *objects;
+    camera_t camera;
     float **buffer;
-} scene;
+} scene_t;
 
 #endif
