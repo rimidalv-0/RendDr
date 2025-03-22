@@ -1,4 +1,4 @@
-#include "symbols.h"
+#include "../H/symbols.h"
 
 const char *const SYMBOLS[] = {
     [MENU_TOP_LEFT] = "\u250F",
@@ -14,6 +14,7 @@ const char *const SYMBOLS[] = {
     [MENU_SEPARATOP_CROSS] = "\u254B",
     [MENU_SEPARATOR_HORIZONTAL] = "\u2500",
     [MENU_SEPARATOR_VERITCAL] = "\u2503",
+    [MENU_UNSELECTED] = " ",
     [MENU_SELECTED] = "\u2981",
     [TEXT_TO_LONG] = "\u2026",
     [INFOLINE_TOP_LEFT] = "\u2554",

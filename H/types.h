@@ -1,17 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef struct
-{
-    int x;
-    int y;
-} vec2;
-typedef struct
-{
-    float x;
-    float y;
-    float z;
-} vec3;
+#include "vectors.h"
+
 typedef struct {
     int a;
     int b;

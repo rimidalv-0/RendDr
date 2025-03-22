@@ -1,6 +1,11 @@
 #ifndef INFOLINE_H
 #define INFOLINE_H
 
+#include <stdio.h>
+
+#include "types.h"
+#include "symbols.h"
+
 typedef enum {
     LEFT,
     CENTER,

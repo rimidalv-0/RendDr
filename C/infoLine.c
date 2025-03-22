@@ -1,9 +1,4 @@
-#include <stdio.h>
-
-#include "types.h"
-#include "symbols.h"
-#include "infoLine.h"
-#include "helper.h"
+#include "./H/infoLine.h"
 
 
 void clearInfoLine(int windowWidth) {

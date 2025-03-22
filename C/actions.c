@@ -1,11 +1,15 @@
-#ifndef ACTIONS_H
-#define ACTIONS_H
+#include "./H/actions.h"
 
+obj *createObject(scene *scene) {
+    scene->n_objects++;
+    scene->objects = realloc(scene->objects, sizeof(obj) * scene->n_objects);
 
-// ---------------------------- object Actions -------------------------
+    return &scene->objects[scene->n_objects - 1];
+}
 
-
-
+void changeObjectColor(obj *object, vec3 col) {
+    object->mat = col;
+}
 
 void changeObjectColorWrapper(scene *scene) {
     /* obj *object = selectObject("select object", scene->objects, scene->n_objects);
@@ -190,8 +194,6 @@ void printObjectInfo(obj *object) {
     return;
 }
 
-// ---------------------------- camera Actions -------------------------
-
 void moveCamera(cam *cam, vec3 pos) {
     cam->pos = pos;
     return;
@@ -223,8 +225,6 @@ void fovCameraWrapper(cam *cam) {
     fovCamera(cam, a);
     return;
 }
-
-// ---------------------------- scene Actions -------------------------
 
 void renameScene(scene *scene) {
     printf("Enter scene name: ");
@@ -258,5 +258,3 @@ void clearScene(scene *scene) {
     scene->n_objects = 0;
     return;
 }
-
-#endif

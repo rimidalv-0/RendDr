@@ -1,5 +1,4 @@
-#ifndef HELPER_H
-#define HELPER_H
+#include "../H/helper.h"
 
 void clearBuffer() {
     while (getchar() != '\n');
@@ -30,5 +29,3 @@ void drawBuffer(float **buffer, vec2 windowSize) {
     
     return;
 }
-
-#endif

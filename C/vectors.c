@@ -1,12 +1,13 @@
-#include <math.h>
-
-#include "vectors.h"
+#include "../H/vectors.h"
 
 vec3 addVec(vec3 a, vec3 b) {
     return (vec3){
         a.x + b.x,
         a.y + b.y,
         a.z + b.z};
+}
+vec2 subVec2(vec2 a, vec2 b){
+    return (vec2){a.x-b.x, a.y-b.y};
 }
 vec3 subVec(vec3 a, vec3 b) {
     return (vec3){
