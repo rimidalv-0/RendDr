@@ -1,4 +1,4 @@
-#include "./H/render.h"
+#include "../H/render.h"
 
 /* float rayCast(vec3 start, vec3 dir, float power, int depth, obj *objects, int n_objects) {
     if (depth > reflections || power <= 0) {

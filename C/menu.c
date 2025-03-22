@@ -1,7 +1,19 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 #include "../H/menu.h"
 
+const vec2 MENU_DEFAULT_POS = {10, 15};
+const vec2 MENU_DEFAULT_SIZE = {15, 10};
+
+menu_t globalMenu = {
+    .pos = {0, 0},
+    .size = {0, 0},
+    .selected = 0,
+    .currentPage = NULL};
+
 void drawMenuLine(int width, LINETYPE type) {
-    LINETYPE left, middle, right;
+    int left, middle, right;
 
     switch (type) {
         case TOP:
@@ -22,22 +34,21 @@ void drawMenuLine(int width, LINETYPE type) {
         default:
             break;
     }
-    printf(SYMBOLS[left]);
+    printf("%s", SYMBOLS[left]);
     for (int i = 0; i < width; i++) {
-        printf(SYMBOLS[middle]);
+        printf("%s", SYMBOLS[middle]);
     }
-    printf(SYMBOLS[right]);
+    printf("%s", SYMBOLS[right]);
 }
-
 void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
     int textLength = strlen(text);
     int spaces = (width - 2) - textLength;
 
-    printf(SYMBOLS[MENU_LEFT]);
+    printf("%s", SYMBOLS[MENU_LEFT]);
     printf(" ");
 
     switch (style) {
-        case TITLE:
+        case TITLE: {
             int spacesLeft = floor((float)spaces / 2);
             int spacesRight = spaces - spacesLeft;
             for (int i = 0; i < spacesLeft; i++) {
@@ -46,7 +57,7 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
             for (int i = 0; i < textLength; i++) {
                 if (text[i] >= 'a' && text[i] <= 'z') {
                     printf("%c", text[i] - ('a' - 'A'));
-                }else{
+                } else {
                     printf("%c", text[i]);
                 }
             }
@@ -54,49 +65,48 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
                 printf(" ");
             }
             break;
-
+        }
         default:
             break;
     }
     printf(" ");
-    printf(SYMBOLS[MENU_RIGHT]);
+    printf("%s", SYMBOLS[MENU_RIGHT]);
 }
+void drawMenu(menu_t *menu) {
+    vec2 cursorPos = menu->pos;
 
-void drawMenu(vec2 pos, vec2 dim, page *page, int selected) {
     // draw topline
-    moveCursor(pos);
-    drawMenuLine(dim.x, TOP);
-    pos.y++;
+    moveCursor(cursorPos);
+    drawMenuLine(menu->size.x, TOP);
+    cursorPos.y++;
 
     // draw title
-    moveCursor(pos);
-    drawMenuEntry(page->title, dim.x, TITLE);
-    pos.y++;
+    moveCursor(cursorPos);
+    drawMenuEntry(menu->currentPage->title, menu->size.x, TITLE);
+    cursorPos.y++;
 
     // draw separator
-    moveCursor(pos);
-    drawMenuLine(dim.x, SEPARATOR);
-    pos.y++;
+    moveCursor(cursorPos);
+    drawMenuLine(menu->size.x, SEPARATOR);
+    cursorPos.y++;
 
-    // draw subpages
-    for (int i = 0; i < fmin(dim.y, page->n_subPages); i++) {
-        moveCursor(pos);
-        drawMenuEntry(page->subPages[i]->title, dim.x, UNSELECTED);
-        pos.y++;
-    }
-
-    // draw actions
-    for (int i = 0; i < fmin(dim.y, page->n_actions); i++) {
-        moveCursor(pos);
-        drawMenuEntry(page->actions[i]->title, dim.x, UNSELECTED);
-        pos.y++;
+    // draw entries
+    for (int i = 0; i < menu->currentPage->n_entries; i++) {
+        moveCursor(cursorPos);
+        drawMenuEntry(menu->currentPage->entries[i], menu->size.x, TITLE);
+        cursorPos.y++;
     }
 
     // draw bottom line
-    moveCursor(pos);
-    drawMenuLine(dim.x, BOTTOM);
+    moveCursor(cursorPos);
+    drawMenuLine(menu->size.x, BOTTOM);
 }
 
-void menu(vec2 pos, vec2 dim, page *page, int sel) {
-    drawMenu(pos, dim, page, sel);
+void callMenu(menu_t *menu, vec2 pos, vec2 size, page_t *page, int sel) {
+    menu->pos = pos;
+    menu->size = size;
+    menu->currentPage = page;
+    menu->selected = sel;
+
+    drawMenu(menu);
 }

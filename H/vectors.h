@@ -1,7 +1,7 @@
 #ifndef VECTORS_H
 #define VECTORS_H
 
-#include <math.h>
+
 
 typedef struct
 {

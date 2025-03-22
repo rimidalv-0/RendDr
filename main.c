@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "H/types.h"
 #include "H/vectors.h"
 #include "H/menu.h"
@@ -45,48 +47,19 @@ int main() {
     // vec2 windowSize = {100, 50};
     // vec2 infoLinePos = {0, windowSize.y - 3};
 
-    typedef enum {
-        ACTION_RENAME_SCENE,
-        ACTION_COUNT
-    } ACTIONID;
-
-    typedef enum {
-        PAGE_MAIN,
-        PAGE_OBJECT,
-        PAGE_CAMERA,
-        PAGE_SCENE,
-        PAGE_RENDER,
-        PAGE_COUNT
-    } PAGEID;
-
-    action actions[ACTION_COUNT];
-    actions[ACTION_RENAME_SCENE] = (action){
-        .title = "rename scene",
-        .function = someAction};
-
-    page pages[PAGE_COUNT];
-
-    pages[PAGE_SCENE] = (page){
-        .title = "scene menu"};
-
-    pages[PAGE_OBJECT] = (page){
-        .title = "object menu"};
-
-    page *mainSubPages[] = {&pages[PAGE_OBJECT], &pages[PAGE_SCENE]};
-    action *mainActions[] = {&actions[ACTION_RENAME_SCENE]};
-    pages[PAGE_MAIN] = (page){
-        .title = "main menu",
-        .subPages = mainSubPages,
-        .n_subPages = sizeof(mainSubPages) / sizeof(mainSubPages[0]),
-        .actions = mainActions,
-        .n_actions = sizeof(mainActions) / sizeof(mainActions[0])};
-
-    scene scene;
-
-    vec2 menustart = {15, 20};
-    vec2 menuend = {30, 25};
     
-    menu(menustart, menuend, &pages[PAGE_MAIN], 1);
+
+    //scene scene;
+    char *entries[] = {"helpp", "okaopdd"};
+
+    page_t page = {
+        .title = "main",
+        .entries = entries,
+        .n_entries = sizeof(entries)/sizeof(entries[0])
+    };
+
+    callMenu(&globalMenu, (vec2){0,1}, (vec2){10,15}, &page, 1);
+    printf("%s", entries[0]);
 
     return 0;
 }

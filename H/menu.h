@@ -1,10 +1,13 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <stdio.h>
+
 #include "symbols.h"
 #include "vectors.h"
 #include "helper.h"
+
+extern const vec2 MENU_DEFAULT_POS;
+extern const vec2 MENU_DEFAULT_SIZE;
 
 
 typedef enum {
@@ -12,35 +15,26 @@ typedef enum {
     UNSELECTED,
     SELECTED
 } TEXTSTYLE;
-
 typedef enum {
     TOP,
     SEPARATOR,
     BOTTOM
 } LINETYPE;
-
-typedef struct action {
-    char *title;
-    void (* function)();
-} action;
-
 typedef struct page {
     char *title;
-    int n_subPages;
-    struct page **subPages;
-    struct page *parentPage;
-    int n_content;
-    char **content;
-    int n_actions;
-    action **actions;
-} page;
+    char **entries;
+    int n_entries;
+} page_t;
+typedef struct menu {
+    vec2 pos;
+    vec2 size;
+    int selected;
+    struct page *currentPage;
+} menu_t;
 
-/// @brief creates a menu
-/// @param pos top left position of menu x,y
-/// @param dim size of menu x,y
-/// @param page adrres of page to display
-/// @param sel which menu entry is selected
-void menu(vec2 pos, vec2 dim, page *page, int sel);
+extern menu_t globalMenu;
+
+
+void callMenu(menu_t *menu, vec2 pos, vec2 size, page_t *page, int sel);
 
 #endif
-

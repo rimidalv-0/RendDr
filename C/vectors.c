@@ -1,3 +1,4 @@
+#include <math.h>
 #include "../H/vectors.h"
 
 vec3 addVec(vec3 a, vec3 b) {

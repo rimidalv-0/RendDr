@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../H/helper.h"
 
 void clearBuffer() {
@@ -16,16 +19,16 @@ void moveCursor(vec2 pos) {
     printf("\033[%d;%dH", pos.y, pos.x);
 }
 
-void resetCursor(){
+void resetCursor() {
     printf("\033[H");
 }
 
 void drawBuffer(float **buffer, vec2 windowSize) {
-    if(!buffer){
-        for(int i = 0; i < windowSize.y;i++){
+    if (!buffer) {
+        for (int i = 0; i < windowSize.y; i++) {
             printf("\n");
         }
     }
-    
+
     return;
 }
