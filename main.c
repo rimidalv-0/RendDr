@@ -3,7 +3,7 @@
 #include "H/types.h"
 #include "H/vectors.h"
 #include "H/menu.h"
-// #include "actions.h"
+#include "H/actions.h"
 
 #define charRatio 14.0 / 36.0
 #define samples 10
@@ -44,22 +44,54 @@ void someAction() {
 }
 
 int main() {
-    // vec2 windowSize = {100, 50};
-    // vec2 infoLinePos = {0, windowSize.y - 3};
+    page_t objectPage = {
+        .title = "object page"};
 
-    
+    entry_t mainEntries[] = {
+        (entry_t){
+            .title = "object menu",
+            .data = &objectPage},
+        (entry_t){
+            .title = "scene menu",
+            .data = &objectPage},
+        (entry_t){
+            .title = "camera menu",
+            .data = &objectPage}};
 
-    //scene scene;
-    char *entries[] = {"helpp", "okaopdd"};
+    page_t mainPage = {
+        .title = "main page",
+        .entries = mainEntries,
+        .n_entries = sizeof(mainEntries) / sizeof(mainEntries[0])};
 
-    page_t page = {
-        .title = "main",
-        .entries = entries,
-        .n_entries = sizeof(entries)/sizeof(entries[0])
-    };
+    page_t *current_page = &mainPage;
 
-    callMenu(&globalMenu, (vec2){0,1}, (vec2){10,15}, &page, 1);
-    printf("%s", entries[0]);
+    int sel = 0;
+    while (1) {
+        callMenu(&globalMenu, (vec2){0, 1}, (vec2){10, 15}, current_page, sel);
+        char key;
+        scanf(" %c", &key);
+        clearBuffer();
 
+        switch (key) {
+            case 's':
+                if (sel >= current_page->n_entries - 1) {
+                    break;
+                }
+                sel++;
+                break;
+            case 'w':
+                if (sel <= 0) {
+                    break;
+                }
+                sel--;
+                break;
+            case 'e':
+                if (sel < current_page->entries) {
+                    current_page = (page_t *)current_page->entries[0].data;
+                }
+            default:
+                break;
+        }
+    }
     return 0;
 }

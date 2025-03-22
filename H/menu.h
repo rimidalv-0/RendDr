@@ -20,9 +20,15 @@ typedef enum {
     SEPARATOR,
     BOTTOM
 } LINETYPE;
+typedef void(*data_handler_t)(void *data);
+typedef struct entry {
+    char *title;
+    void *data;
+    data_handler_t handler;
+} entry_t;
 typedef struct page {
     char *title;
-    char **entries;
+    entry_t *entries;
     int n_entries;
 } page_t;
 typedef struct menu {

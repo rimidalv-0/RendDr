@@ -32,3 +32,9 @@ void drawBuffer(float **buffer, vec2 windowSize) {
 
     return;
 }
+
+char **extractPageTitles(page_t **pages, int n_pages){
+    for(int i = 0; i < n_pages; i++){
+        
+    }
+}

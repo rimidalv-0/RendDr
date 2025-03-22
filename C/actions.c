@@ -1,7 +1,7 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "../H/actions.h"
+
+
 
 // obj *createObject(scene *scene) {
 //     scene->n_objects++;
@@ -122,52 +122,52 @@
 //         object->mesh.faces[i].normal = normVec(crossProduct(subVec(c, a), subVec(b, a)));
 //     }
 // }
-// void importObject(scene *scene) {
-//     system("clear");
-//     printf("enter directory: ");
+void importObject(scene *scene) {
+    /* system("clear");
+    printf("enter directory: ");
 
-//     char dirPath[256];
-//     DIR *dir;
+    char dirPath[256];
+    DIR *dir;
 
-//     do {
-//         fgets(dirPath, sizeof(dirPath), stdin);
-//         removeNewline(dirPath);
-//         dir = opendir(dirPath);
+    do {
+        fgets(dirPath, sizeof(dirPath), stdin);
+        removeNewline(dirPath);
+        dir = opendir(dirPath);
 
-//         if (!dir) {
-//             printf("no such directory: %s\n", dirPath);
-//         }
-//     } while (!dir);
+        if (!dir) {
+            printf("no such directory: %s\n", dirPath);
+        }
+    } while (!dir);
 
-//     int n_files = 0;
-//     char **files = NULL;
-//     struct dirent *entry;
+    int n_files = 0;
+    char **files = NULL;
+    struct dirent *entry;
 
-//     while ((entry = readdir(dir)) != NULL) {
-//         if (entry->d_type != DT_REG) {
-//             continue;
-//         }
-//         n_files++;
-//         files = realloc(files, sizeof(char *) * n_files);
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_type != DT_REG) {
+            continue;
+        }
+        n_files++;
+        files = realloc(files, sizeof(char *) * n_files);
 
-//         files[n_files - 1] = strdup(entry->d_name);
-//     }
+        files[n_files - 1] = strdup(entry->d_name);
+    }
 
-//     closedir(dir);
+    closedir(dir);
 
-//     int selection = selectFromList("lol", files, n_files);
+    int selection = selectFromList("lol", files, n_files);
 
-//     char filePath[512];
-//     snprintf(filePath, sizeof(filePath), "%s/%s", dirPath, files[selection]);
+    char filePath[512];
+    snprintf(filePath, sizeof(filePath), "%s/%s", dirPath, files[selection]);
 
-//     FILE *file = fopen(filePath, "r");
+    FILE *file = fopen(filePath, "r");
 
-//     obj *object = createObject(scene);
+    obj *object = createObject(scene);
 
-//     importFromObj(object, file);
-//     moveObject(object, (vec3){0, 0, 0});
-//     scaleObject(object, (vec3){1, 1, 1});
-// }
+    importFromObj(object, file);
+    moveObject(object, (vec3){0, 0, 0});
+    scaleObject(object, (vec3){1, 1, 1}); */
+}
 // void printObjectInfo(obj *object) {
 //     printf("| object name: \"%s\"\n", object->name);
 //     printf("| vertices: %d\n", object->mesh.n_vertices);
@@ -213,3 +213,8 @@
 //     scene->n_objects = 0;
 //     return; 
 // }
+
+action_t a_importObject = {
+    .title = "import object",
+    .fuction = importObject
+};

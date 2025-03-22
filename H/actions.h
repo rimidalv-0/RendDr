@@ -1,10 +1,19 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
-
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "helper.h"
 #include "types.h"
 #include "vectors.h"
+
+typedef struct action {
+    char* title;
+    void (*fuction)();
+} action_t;
+
+extern action_t a_importObject;
 
 obj* createObject(scene* scene);
 void changeObjectColor(obj* object, vec3 col);
@@ -18,7 +27,6 @@ void positionVertex(vec3* vertex, vec3 pos);
 face* createFace(obj* object);
 void fillFace(face* face, int a, int b, int c);
 void importFromObj(obj* object, FILE* file);
-void importObject(scene* scene);
 void printObjectInfo(obj* object);
 void moveCamera(cam* cam, vec3 pos);
 void moveCameraWrapper(cam* cam);
