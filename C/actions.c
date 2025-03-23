@@ -121,21 +121,19 @@ void importFromObj(object_t *object, FILE *file) {
 }
 
 void importObject(scene_t *scene) {
-    menu_t listMenu = initMenu((vec2){1, 1}, (vec2){10, 50});
-
     char dirPath[256];
     DIR *dir;
 
     rawMode_disable();
 
     do {
-        writeInfoScreen(&globalInfoScreen, "enter directory: ", 1, CENTER);
+        // writeInfoScreen(&globalInfoScreen, "enter directory: ", 1, LEFT);
         fgets(dirPath, sizeof(dirPath), stdin);
         removeNewline(dirPath);
 
         dir = opendir(dirPath);
         if (!dir) {
-            writeInfoScreen(&globalInfoScreen, "no such file or direcory", 1, CENTER);
+            // writeInfoScreen(&globalInfoScreen, "no such file or direcory", 1, CENTER);
         }
     } while (!dir);
 
@@ -153,8 +151,7 @@ void importObject(scene_t *scene) {
     }
 
     closedir(dir);
-    loadPage(&listMenu, &listPage);
-    callMenu(&listMenu, 1);
+    entry_t *selection = selectFromMenu(&listPage, (vec2){0, 0}, (vec2){30, 15});
     getchar();
 }
 

@@ -2,10 +2,10 @@
 
 typedef void (*action)(void *data);
 void pageHandler(void *entryData, void **context) {
-    page_t *page = (page_t *)entryData;
-    menu_t *menu = (menu_t *)context[CONTEXT_MENU];
+    page_t **location = (page_t **)context[CONTEXT_PAGE];
+    page_t *source = (page_t *)entryData;
 
-    loadPage(menu, page);
+    *location = source;
 }
 
 void sceneActionHandler(void *entryData, void **context) {

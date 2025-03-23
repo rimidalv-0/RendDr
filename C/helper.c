@@ -1,9 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <termios.h>
-#include <unistd.h>
 #include "../H/helper.h"
+
 
 void clearBuffer() {
     while (getchar() != '\n');
@@ -75,6 +71,28 @@ int hasExtension(const char *filename, const char *ext) {
     if (len_filename < len_ext) return 0;
 
     return strcmp(filename + (len_filename - len_ext), ext) == 0;
+}
+
+vec2 updateWindowSize(vec2 *window) {
+    struct winsize w;
+    vec2 size = {0, 0};
+
+    if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0) {
+        window->x = w.ws_col;
+        window->y = w.ws_row;
+    } else {
+        printf("#######");
+    }
+
+    return size;
+}
+
+char getKey() {
+    char c;
+    rawMode_enable();
+    c = getchar();
+    rawMode_disable();
+    return c;
 }
 
 char *my_strdup(const char *s) {

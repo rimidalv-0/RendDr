@@ -11,72 +11,48 @@
 #define samples 10
 #define reflections 10
 
-vec2 windowSize = {100, 20};
-
 page_t *entryPage = &mainPage;
 page_t *previousPage;
 scene_t scene;
 
 int main() {
     // init gui
-    globalInfoScreen = initInfoScreen((vec2){1, windowSize.y - 3}, (vec2){windowSize.x, 3});
-    globalMenu = initMenu((vec2){20, 10}, (vec2){15, 10});
+    updateWindowSize(&windowSize);
+    // globalInfoScreen = initInfoScreen((vec2){1, windowSize.y - 3}, (vec2){windowSize.x, 3});
+
+    vec2 menuPos = {
+        floor((float)(windowSize.x - floor((float)windowSize.x / 3)) / 2),
+        floor((float)(windowSize.y - floor((float)windowSize.y / 2)) / 2)};
+    vec2 menuSize = {
+        floor((float)windowSize.x / 3),
+        floor((float)windowSize.y / 2)};
 
     drawBuffer(NULL, windowSize);
 
-    callInfoScreen(&globalInfoScreen);
-    writeInfoScreen(&globalInfoScreen, "WELCOME", 1, CENTER);
+    // callInfoScreen(&globalInfoScreen);
+    // writeInfoScreen(&globalInfoScreen, "WELCOME", 1, CENTER);
 
+    page_t *page = &mainPage;
     void *context[] = {
-        [CONTEXT_MENU] = &globalMenu,
-        [CONTEXT_INFOSCREEN] = &globalInfoScreen};
+        [CONTEXT_PAGE] = &page};
 
     // enter the program
-    while (1) {
-        rawMode_enable();
-        int sel = 0;
-        char key;
-        scanf(" %c", &key);
-        if (key == 'm') {  // open menu
-            loadPage(&globalMenu, entryPage);
-            while (key != 'q') {  // until the menu is closed
-                callMenu(&globalMenu, sel);
-                scanf(" %c", &key);
-                switch (key) {
-                    case 'w':
-                        if (sel <= 0) {
-                            break;
-                        }
-                        sel--;
-                        break;
-                    case 's':
-                        if (sel >= globalMenu.currentPage->n_entries - 1) {
-                            break;
-                        }
-                        sel++;
-                        break;
-                        case 'r':
-                        if(globalMenu.previousPage){
-                            globalMenu.currentPage = globalMenu.previousPage;
-                        }
-                        break;
-                    case 'e': {
-                        if (!globalMenu.currentPage->entries[sel].handler) {
-                            break;
-                        }
-                        entry_t selectedEntry = globalMenu.currentPage->entries[sel];
-                        selectedEntry.handler(selectedEntry.data, context);
-                        break;
-                    }
-                    default:
-                        break;
-                }
-                redrawChunk(globalMenu.pos, globalMenu.size, " ");
-            }
-            redrawChunk(globalMenu.pos, globalMenu.size, " ");
-            rawMode_disable();
+    do {
+        updateWindowSize(&windowSize);
+        char key = getKey();
+        if (key == 'm') {
+            entry_t *selection;
+            // while (((selection = selectFromMenu(page, menuPos, menuSize)) != NULL)) {
+            //     if (!selection->handler) break;
+            //     selection->handler(selection->data, context);
+            // }
+            do {
+                selection = selectFromMenu(page, menuPos, menuSize);
+                if (!selection || !selection->handler) break;
+                selection->handler(selection->data, context);
+            } while (1);
+            page = &mainPage;
         }
-    }
-    
+    } while (1);
     return 0;
 }

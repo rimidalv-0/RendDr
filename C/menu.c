@@ -1,6 +1,5 @@
 #include "../H/menu.h"
 
-
 page_t initPage(char *title) {
     page_t page = {
         .title = title,
@@ -91,11 +90,10 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
             }
             break;
         }
-
         case UNSELECTED: {
             printf("%s", SYMBOLS[MENU_UNSELECTED]);
             printf("%s", text);
-            for (int i = 0; i < spaces; i++) {
+            for (int i = 1; i < spaces; i++) {
                 printf(" ");
             }
             break;
@@ -103,7 +101,7 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
         case SELECTED: {
             printf("%s", SYMBOLS[MENU_SELECTED]);
             printf("%s", text);
-            for (int i = 0; i < spaces; i++) {
+            for (int i = 1; i < spaces; i++) {
                 printf(" ");
             }
             break;
@@ -140,4 +138,59 @@ void callMenu(menu_t *menu, int sel) {
     // draw bottom line
     moveCursor(cursorPos);
     drawMenuLine(menu->size.x, BOTTOM);
+}
+
+void drawMenu(page_t *page, vec2 pos, vec2 size, int sel) {
+    vec2 cursorPos = pos;
+    moveCursor(cursorPos);
+    drawMenuLine(size.x, TOP);
+    cursorPos.y++;
+
+    moveCursor(cursorPos);
+    drawMenuEntry(page->title, size.x, TITLE);
+    cursorPos.y++;
+
+    // draw separator
+    moveCursor(cursorPos);
+    drawMenuLine(size.x, SEPARATOR);
+    cursorPos.y++;
+
+    // draw entries
+    for (int i = 0; i < page->n_entries; i++) {
+        int type = (i == sel) ? SELECTED : UNSELECTED;
+        moveCursor(cursorPos);
+        drawMenuEntry(page->entries[i].title, size.x, type);
+        cursorPos.y++;
+    }
+
+    // draw bottom line
+    moveCursor(cursorPos);
+    drawMenuLine(size.x, BOTTOM);
+}
+
+entry_t *selectFromMenu(page_t *page, vec2 pos, vec2 size) {
+    entry_t selection;
+
+    int sel = 0;
+    while (1) {
+        drawMenu(page, pos, size, sel);
+        char key = getKey();
+
+        switch (key) {
+            case 'w':
+                if (sel <= 0) break;
+                sel--;
+                break;
+            case 's':
+                if (sel >= page->n_entries - 1) break;
+                sel++;
+                break;
+            case 'e':
+                return &page->entries[sel];
+            case 'q':
+                return NULL;
+            default:
+                break;
+        }
+    }
 }

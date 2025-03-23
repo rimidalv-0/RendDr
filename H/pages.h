@@ -8,7 +8,8 @@ typedef enum {
     CONTEXT_MENU,
     CONTEXT_SCENE,
     CONTEXT_INFOSCREEN,
-    CONTEXT_COUNT
+    CONTEXT_COUNT,
+    CONTEXT_PAGE
 } CONTEXT_ID;
 
 extern page_t mainPage;

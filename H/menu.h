@@ -50,4 +50,6 @@ menu_t initMenu(vec2 pos, vec2 size);
 void loadPage(menu_t *menu, page_t *page);
 void callMenu(menu_t *menu, int sel);
 
+entry_t *selectFromMenu(page_t *page, vec2 pos, vec2 size);
+
 #endif
