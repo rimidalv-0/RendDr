@@ -16,7 +16,7 @@ typedef struct {
     face_t *faces;
 } mesh_t;
 typedef struct {
-    char *name;
+    char name[64];
     vec3 pos;
     vec3 scale;
     vec3 mat;

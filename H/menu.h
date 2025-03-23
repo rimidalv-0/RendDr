@@ -40,6 +40,12 @@ typedef struct menu {
     page_t *previousPage;
 } menu_t;
 
+page_t initPage(char *title);
+
+entry_t initEntry(char *title, void *data, void *handler);
+
+void addEntry(page_t *page, entry_t entry);
+
 menu_t initMenu(vec2 pos, vec2 size);
 void loadPage(menu_t *menu, page_t *page);
 void callMenu(menu_t *menu, int sel);

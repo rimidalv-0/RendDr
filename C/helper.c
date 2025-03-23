@@ -67,3 +67,21 @@ void redrawChunk(vec2 pos, vec2 size, char *chunk) {
         moveCursor(cursorPos);
     }
 }
+
+int hasExtension(const char *filename, const char *ext) {
+    size_t len_filename = strlen(filename);
+    size_t len_ext = strlen(ext);
+
+    if (len_filename < len_ext) return 0;
+
+    return strcmp(filename + (len_filename - len_ext), ext) == 0;
+}
+
+char *my_strdup(const char *s) {
+    size_t len = strlen(s) + 1;
+    char *dup = malloc(len);
+    if (dup != NULL) {
+        memcpy(dup, s, len);
+    }
+    return dup;
+}

@@ -1,5 +1,29 @@
 #include "../H/menu.h"
 
+
+page_t initPage(char *title) {
+    page_t page = {
+        .title = title,
+        .entries = NULL,
+        .n_entries = 0};
+    return page;
+}
+
+entry_t initEntry(char *title, void *data, void *handler) {
+    entry_t entry = {
+        .title = title,
+        .data = data,
+        .handler = handler};
+    return entry;
+}
+
+void addEntry(page_t *page, entry_t entry) {
+    int n_entries = page->n_entries + 1;
+    page->entries = realloc(page->entries, n_entries * sizeof(entry_t));
+    page->entries[page->n_entries] = entry;
+    page->n_entries = n_entries;
+}
+
 menu_t initMenu(vec2 pos, vec2 size) {
     return (menu_t){
         .pos = pos,

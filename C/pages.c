@@ -8,7 +8,7 @@ void pageHandler(void *entryData, void **context) {
     loadPage(menu, page);
 }
 
-void sceneActionHandler(void *entryData, void **context){
+void sceneActionHandler(void *entryData, void **context) {
     action func = (action)entryData;
     scene_t *scene = (scene_t *)context[CONTEXT_SCENE];
     func(scene);
@@ -16,36 +16,36 @@ void sceneActionHandler(void *entryData, void **context){
 
 entry_t mainEntries[] = {
     (entry_t){
-        .title = "object page",
+        .title = "objects menu",
         .data = &objectPage,
         .handler = pageHandler},
     (entry_t){
-        .title = "scene page",
+        .title = "scene menu",
         .data = &scenePage,
         .handler = pageHandler},
     (entry_t){
-        .title = "camera page",
+        .title = "camera menu",
         .data = &cameraPage,
         .handler = pageHandler},
     (entry_t){
-        .title = "render page",
+        .title = "render menu",
         .data = &renderPage,
         .handler = pageHandler}};
 page_t mainPage = {
-    .title = "main page",
+    .title = "main menu",
     .entries = mainEntries,
     .n_entries = sizeof(mainEntries) / sizeof(mainEntries[0])};
 
 entry_t objectEntries[] = {
     (entry_t){
-        .title = "main page",
+        .title = "<-",
         .data = &mainPage,
         .handler = pageHandler},
     (entry_t){
         .title = "import object",
         .data = importObject,
-        .handler = sceneActionHandler
-    }};
+        .handler = sceneActionHandler},
+};
 page_t objectPage = {
     .title = "object page",
     .entries = objectEntries,

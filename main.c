@@ -5,15 +5,14 @@
 #include "H/menu.h"
 #include "H/actions.h"
 #include "H/infoScreen.h"
+#include "H/globals.h"
 
 #define charRatio 14.0 / 36.0
 #define samples 10
 #define reflections 10
 
-vec2 windowSize = {100, 50};
+vec2 windowSize = {100, 20};
 
-infoScreen_t globalInfoScreen;
-menu_t globalMenu;
 page_t *entryPage = &mainPage;
 page_t *previousPage;
 scene_t scene;

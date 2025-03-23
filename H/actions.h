@@ -5,9 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include "infoScreen.h"
+#include "menu.h"
 #include "helper.h"
 #include "types.h"
 #include "vectors.h"
+#include "globals.h"
 
 typedef struct action {
     char* title;

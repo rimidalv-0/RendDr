@@ -11,7 +11,7 @@ void changeObjectColor(object_t *object, vec3 col) {
     object->mat = col;
 }
 void changeObjectColorWrapper(scene_t *scene) {
-    object_t *object = NULL;// = selectObject("select object", scene->objects, scene->n_objects);
+    object_t *object = NULL;  // = selectObject("select object", scene->objects, scene->n_objects);
 
     printf("select color: ");
     float a, b, c;
@@ -33,7 +33,7 @@ void moveObject(object_t *object, vec3 pos) {
     object->pos = pos;
 }
 void moveObjectWrapper(scene_t *scene) {
-    object_t *object = NULL ;//selectObject("select object", scene->objects, scene->n_objects);
+    object_t *object = NULL;  // selectObject("select object", scene->objects, scene->n_objects);
 
     if (!object) {
         return;
@@ -119,52 +119,43 @@ void importFromObj(object_t *object, FILE *file) {
         object->mesh.faces[i].normal = normVec(crossProduct(subVec(c, a), subVec(b, a)));
     }
 }
+
 void importObject(scene_t *scene) {
-    system("clear");
-    printf("enter directory: ");
+    menu_t listMenu = initMenu((vec2){1, 1}, (vec2){10, 50});
 
     char dirPath[256];
     DIR *dir;
 
+    rawMode_disable();
+
     do {
+        writeInfoScreen(&globalInfoScreen, "enter directory: ", 1, CENTER);
         fgets(dirPath, sizeof(dirPath), stdin);
         removeNewline(dirPath);
-        dir = opendir(dirPath);
 
+        dir = opendir(dirPath);
         if (!dir) {
-            printf("no such directory: %s\n", dirPath);
+            writeInfoScreen(&globalInfoScreen, "no such file or direcory", 1, CENTER);
         }
     } while (!dir);
 
-    int n_files = 0;
-    char **files = NULL;
     struct dirent *entry;
+    page_t listPage = initPage(dirPath);
 
     while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_type != DT_REG) {
-            continue;
-        }
-        n_files++;
-        files = realloc(files, sizeof(char *) * n_files);
+        if (entry->d_type != DT_REG) continue;
+        if (!hasExtension(entry->d_name, ".obj")) continue;
 
-        strcpy(files[n_files - 1], entry->d_name);
-        // files[n_files - 1] = strdup(entry->d_name);
+        char filePath[512];
+        snprintf(filePath, sizeof(filePath), "%s/%s", dirPath, entry->d_name);
+        entry_t file = initEntry(entry->d_name, filePath, NULL);
+        addEntry(&listPage, file);
     }
 
     closedir(dir);
-
-    int selection = 1;
-
-    char filePath[512];
-    snprintf(filePath, sizeof(filePath), "%s/%s", dirPath, files[selection]);
-
-    FILE *file = fopen(filePath, "r");
-
-    object_t *object = createObject(scene);
-
-    importFromObj(object, file);
-    moveObject(object, (vec3){0, 0, 0});
-    scaleObject(object, (vec3){1, 1, 1});
+    loadPage(&listMenu, &listPage);
+    callMenu(&listMenu, 1);
+    getchar();
 }
 
 void renameScene(scene_t *scene) {
@@ -189,7 +180,7 @@ void renameScene(scene_t *scene) {
 }
 void clearScene(scene_t *scene) {
     renameScene(scene);
-    //moveCamera(&scene->camera, (vec3){0, 0, -2});
+    // moveCamera(&scene->camera, (vec3){0, 0, -2});
     for (int i = 0; i < scene->n_objects; i++) {
         free(scene->objects[i].mesh.verticies);
         free(scene->objects[i].mesh.faces);

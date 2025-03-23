@@ -18,4 +18,8 @@ void rawMode_disable();
 
 void redrawChunk(vec2 pos, vec2 size, char *chunk);
 
+int hasExtension(const char* filename, const char* ext);
+
+char* my_strdup(const char* s);
+
 #endif
