@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <termios.h>
+#include <unistd.h>
 #include "../H/helper.h"
 
 void clearBuffer() {
@@ -33,8 +35,36 @@ void drawBuffer(float **buffer, vec2 windowSize) {
     return;
 }
 
-char **extractPageTitles(page_t **pages, int n_pages){
-    for(int i = 0; i < n_pages; i++){
-        
+void rawMode_enable() {
+    struct termios term;
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+void rawMode_disable() {
+    struct termios term;
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag |= (ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void redrawChunk(vec2 pos, vec2 size, char *chunk) {
+    vec2 cursorPos = pos;
+    moveCursor(cursorPos);
+
+    int chunk_i = 0;
+    int chunkLength = strlen(chunk);
+
+    for (int i = 0; i < size.y; i++) {
+        for (int j = 0; j < size.x; j++) {
+            if (chunk_i < chunk_i) {
+                printf("%c", chunk[chunk_i]);
+            } else {
+                printf(" ");
+            }
+            chunk_i++;
+        }
+        cursorPos.y++;
+        moveCursor(cursorPos);
     }
 }

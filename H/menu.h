@@ -1,14 +1,13 @@
 #ifndef MENU_H
 #define MENU_H
 
-
 #include "symbols.h"
 #include "vectors.h"
 #include "helper.h"
-
-extern const vec2 MENU_DEFAULT_POS;
-extern const vec2 MENU_DEFAULT_SIZE;
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 typedef enum {
     TITLE,
@@ -20,15 +19,15 @@ typedef enum {
     SEPARATOR,
     BOTTOM
 } LINETYPE;
-typedef void(*data_handler_t)(void *data);
+typedef void (*data_handler_t)(void *data);
 typedef struct entry {
     char *title;
-    void *data;
+    const void *data;
     data_handler_t handler;
 } entry_t;
 typedef struct page {
     char *title;
-    entry_t *entries;
+    const entry_t *entries;
     int n_entries;
 } page_t;
 typedef struct menu {
@@ -38,9 +37,8 @@ typedef struct menu {
     struct page *currentPage;
 } menu_t;
 
-extern menu_t globalMenu;
-
-
-void callMenu(menu_t *menu, vec2 pos, vec2 size, page_t *page, int sel);
+menu_t initMenu(vec2 pos, vec2 size);
+void loadPage(menu_t *menu, page_t *page);
+void callMenu(menu_t *menu,  int sel);
 
 #endif

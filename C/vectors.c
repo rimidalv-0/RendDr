@@ -1,6 +1,12 @@
 #include <math.h>
 #include "../H/vectors.h"
 
+vec2 addVec2(vec2 a, vec2 b){
+    return (vec2){
+        a.x + b.x,
+        a.y + b.y
+    };
+}
 vec3 addVec(vec3 a, vec3 b) {
     return (vec3){
         a.x + b.x,

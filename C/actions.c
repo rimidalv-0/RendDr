@@ -122,7 +122,7 @@
 //         object->mesh.faces[i].normal = normVec(crossProduct(subVec(c, a), subVec(b, a)));
 //     }
 // }
-void importObject(scene_t *scene) {
+//void importObject(scene_t *scene) {
     /* system("clear");
     printf("enter directory: ");
 
@@ -167,7 +167,7 @@ void importObject(scene_t *scene) {
     importFromObj(object, file);
     moveObject(object, (vec3){0, 0, 0});
     scaleObject(object, (vec3){1, 1, 1}); */
-}
+//}
 // void printObjectInfo(obj *object) {
 //     printf("| object name: \"%s\"\n", object->name);
 //     printf("| vertices: %d\n", object->mesh.n_vertices);

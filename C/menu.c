@@ -1,17 +1,15 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
 #include "../H/menu.h"
 
-const vec2 MENU_DEFAULT_POS = {10, 15};
-const vec2 MENU_DEFAULT_SIZE = {15, 10};
-
-menu_t globalMenu = {
-    .pos = {0, 0},
-    .size = {0, 0},
-    .selected = 0,
-    .currentPage = NULL};
-
+menu_t initMenu(vec2 pos, vec2 size) {
+    return (menu_t){
+        .pos = pos,
+        .size = size,
+        .selected = 0,
+        .currentPage = NULL};
+}
+void loadPage(menu_t *menu, page_t *page) {
+    menu->currentPage = page;
+}
 void drawMenuLine(int width, LINETYPE type) {
     int left, middle, right;
 
@@ -35,14 +33,14 @@ void drawMenuLine(int width, LINETYPE type) {
             break;
     }
     printf("%s", SYMBOLS[left]);
-    for (int i = 0; i < width; i++) {
+    for (int i = 1; i < width - 1; i++) {
         printf("%s", SYMBOLS[middle]);
     }
     printf("%s", SYMBOLS[right]);
 }
 void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
     int textLength = strlen(text);
-    int spaces = (width - 2) - textLength;
+    int spaces = (width - 4) - textLength;
 
     printf("%s", SYMBOLS[MENU_LEFT]);
     printf(" ");
@@ -70,7 +68,7 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
 
         case UNSELECTED: {
             printf("%s", SYMBOLS[MENU_UNSELECTED]);
-            printf("%s",text);
+            printf("%s", text);
             for (int i = 0; i < spaces; i++) {
                 printf(" ");
             }
@@ -78,7 +76,7 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
         }
         case SELECTED: {
             printf("%s", SYMBOLS[MENU_SELECTED]);
-            printf("%s",text);
+            printf("%s", text);
             for (int i = 0; i < spaces; i++) {
                 printf(" ");
             }
@@ -90,15 +88,12 @@ void drawMenuEntry(char *text, int width, TEXTSTYLE style) {
     printf(" ");
     printf("%s", SYMBOLS[MENU_RIGHT]);
 }
-void drawMenu(menu_t *menu, int sel) {
+void callMenu(menu_t *menu, int sel) {
     vec2 cursorPos = menu->pos;
-
-    // draw topline
     moveCursor(cursorPos);
     drawMenuLine(menu->size.x, TOP);
     cursorPos.y++;
 
-    // draw title
     moveCursor(cursorPos);
     drawMenuEntry(menu->currentPage->title, menu->size.x, TITLE);
     cursorPos.y++;
@@ -119,13 +114,4 @@ void drawMenu(menu_t *menu, int sel) {
     // draw bottom line
     moveCursor(cursorPos);
     drawMenuLine(menu->size.x, BOTTOM);
-}
-
-void callMenu(menu_t *menu, vec2 pos, vec2 size, page_t *page, int sel) {
-    menu->pos = pos;
-    menu->size = size;
-    menu->currentPage = page;
-    menu->selected = sel;
-
-    drawMenu(menu, sel);
 }
