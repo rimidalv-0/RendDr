@@ -47,7 +47,6 @@ void rawMode_disable() {
     term.c_lflag |= (ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
-
 void redrawChunk(vec2 pos, vec2 size, char *chunk) {
     vec2 cursorPos = pos;
     moveCursor(cursorPos);
@@ -57,7 +56,7 @@ void redrawChunk(vec2 pos, vec2 size, char *chunk) {
 
     for (int i = 0; i < size.y; i++) {
         for (int j = 0; j < size.x; j++) {
-            if (chunk_i < chunk_i) {
+            if (chunk_i < chunkLength) {
                 printf("%c", chunk[chunk_i]);
             } else {
                 printf(" ");

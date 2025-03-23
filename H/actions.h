@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include "helper.h"
 #include "types.h"
 #include "vectors.h"
@@ -16,6 +17,7 @@ typedef struct action {
 extern action_t a_importObject;
 
 object_t* createObject(scene_t* scene);
+void importObject(scene_t* scene);
 void changeObjectColor(object_t* object, vec3 col);
 void changeObjectColorWrapper(scene_t* scene);
 void renameObject(object_t* object, char name[64]);

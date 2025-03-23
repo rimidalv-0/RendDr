@@ -5,9 +5,11 @@ menu_t initMenu(vec2 pos, vec2 size) {
         .pos = pos,
         .size = size,
         .selected = 0,
-        .currentPage = NULL};
+        .currentPage = NULL,
+        .previousPage = NULL};
 }
 void loadPage(menu_t *menu, page_t *page) {
+    menu->previousPage = menu->currentPage;
     menu->currentPage = page;
 }
 void drawMenuLine(int width, LINETYPE type) {

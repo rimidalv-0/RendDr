@@ -4,11 +4,17 @@
 #include "menu.h"
 #include "actions.h"
 
-extern const page_t mainPage;
-extern const page_t objectPage;
-extern const page_t scenePage;
-extern const page_t cameraPage;
-extern const page_t renderPage;
+typedef enum {
+    CONTEXT_MENU,
+    CONTEXT_SCENE,
+    CONTEXT_INFOSCREEN,
+    CONTEXT_COUNT
+} CONTEXT_ID;
 
+extern page_t mainPage;
+extern page_t objectPage;
+extern page_t scenePage;
+extern page_t cameraPage;
+extern page_t renderPage;
 
 #endif

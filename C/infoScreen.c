@@ -37,7 +37,7 @@ void callInfoScreen(infoScreen_t *screen) {
     }
     printf("%s", SYMBOLS[INFOSCREEN_BOTTOM_RIGHT]);
 }
-void writeInfoScreen(infoScreen_t *screen, char *data, int row, MODE mode) {
+void writeInfoScreen(infoScreen_t *screen, char *data, int row, ALIGN_TEXT mode) {
     vec2 cursorPos;
     cursorPos.y = screen->pos.y + row;
     switch (mode) {

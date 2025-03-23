@@ -19,26 +19,29 @@ typedef enum {
     SEPARATOR,
     BOTTOM
 } LINETYPE;
-typedef void (*data_handler_t)(void *data);
+
 typedef struct entry {
     char *title;
-    const void *data;
-    data_handler_t handler;
+    void *data;
+    void (*handler)(void *, void **);
 } entry_t;
+
 typedef struct page {
     char *title;
-    const entry_t *entries;
+    entry_t *entries;
     int n_entries;
 } page_t;
+
 typedef struct menu {
     vec2 pos;
     vec2 size;
     int selected;
-    struct page *currentPage;
+    page_t *currentPage;
+    page_t *previousPage;
 } menu_t;
 
 menu_t initMenu(vec2 pos, vec2 size);
 void loadPage(menu_t *menu, page_t *page);
-void callMenu(menu_t *menu,  int sel);
+void callMenu(menu_t *menu, int sel);
 
 #endif

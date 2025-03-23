@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 #include "H/pages.h"
 #include "H/types.h"
 #include "H/vectors.h"
@@ -29,15 +28,19 @@ int main() {
     callInfoScreen(&globalInfoScreen);
     writeInfoScreen(&globalInfoScreen, "WELCOME", 1, CENTER);
 
+    void *context[] = {
+        [CONTEXT_MENU] = &globalMenu,
+        [CONTEXT_INFOSCREEN] = &globalInfoScreen};
+
     // enter the program
     while (1) {
         rawMode_enable();
         int sel = 0;
         char key;
         scanf(" %c", &key);
-        if (key == 'm') {         // open menu
+        if (key == 'm') {  // open menu
+            loadPage(&globalMenu, entryPage);
             while (key != 'q') {  // until the menu is closed
-                loadPage(&globalMenu, entryPage);
                 callMenu(&globalMenu, sel);
                 scanf(" %c", &key);
                 switch (key) {
@@ -48,21 +51,33 @@ int main() {
                         sel--;
                         break;
                     case 's':
-                        if(sel >= globalMenu.currentPage->n_entries - 1){
+                        if (sel >= globalMenu.currentPage->n_entries - 1) {
                             break;
                         }
                         sel++;
                         break;
-                    case 'e':
+                        case 'r':
+                        if(globalMenu.previousPage){
+                            globalMenu.currentPage = globalMenu.previousPage;
+                        }
                         break;
+                    case 'e': {
+                        if (!globalMenu.currentPage->entries[sel].handler) {
+                            break;
+                        }
+                        entry_t selectedEntry = globalMenu.currentPage->entries[sel];
+                        selectedEntry.handler(selectedEntry.data, context);
+                        break;
+                    }
                     default:
                         break;
                 }
+                redrawChunk(globalMenu.pos, globalMenu.size, " ");
             }
-
             redrawChunk(globalMenu.pos, globalMenu.size, " ");
             rawMode_disable();
         }
     }
+    
     return 0;
 }
